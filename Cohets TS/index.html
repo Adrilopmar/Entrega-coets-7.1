@@ -1,0 +1,175 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body class="bg-dark container-fluid row justify-content-around">
+    <section class=" col-6">
+        <div id='rocket-name' class="col-6  cohet-nou justify-content-center">
+            <div class=" new-name justify-content-center row">
+                    <input class="text-center inner-new col-9" type="text" autocomplete="off" oninput="validateName()"  placeholder="Rocket's name" id="rocket" value="">
+                    <div class="invalid-feedback text-center col-5" id="name-error"></div>
+            </div>
+            <div class="d-flexjustify-content-around">
+                <div class="col-7 button-new">
+                    <button class="btn inner-new btn-primary col-12" onclick="NewRocket()">New Rocket</button>
+                </div>
+                <div class="col-7 button-new">
+                    <button id="show-rockets" class="btn inner-new btn-secondary d-none col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="rocketsList()">Show rockets</button>
+                </div>
+                <div class="col-7 button-new">
+                    <button id="selectRunners" class="btn inner-new btn-warning d-none col-12" onclick="selecting()">Select runners</button>
+                </div>
+                <div class="col-7 button-new">
+                    <button class="btn inner-new btn-info col-12" data-bs-toggle="modal" data-bs-target="#howToModal">How to play</button>
+                </div>
+            </div>
+        </div>
+        <div id="sel-runner" class="col-9 choose d-flex justify-content-around d-none">
+            <div class="col-5 d-flex lobby-select">
+                <div class="img-coet-3 d-flex justify-content-center">
+                    <img src="images/3-rocket.png" class="rocket-3" alt="3 engines rocket">
+                </div>
+                <button class="btn btn-primary" id="little" onclick="createLittleRocket()">3 engines rocket</button>
+            </div>
+            <div class="col-5 d-flex lobby-select">
+                <div class="img-coet-3 d-flex justify-content-center">
+                    <img src="images/6-rocket.png" class="rocket-6" alt="6 engines rocket">
+                </div>
+                <button class="btn btn-primary" id="big" onclick="createBigRocket()">6 engines rocket</button>
+            </div>
+        </div>
+    </section>
+    <section id="stadium" class="d-none">
+        <p class="counting" id="count-down">Time: </p>
+        <div class="player-1 row justify-content-around d-none" id="player1">
+            <div class="road road1 col-12" id="backloop">
+                <div class="points" id="points-0">Score: </div>
+            </div>
+            <div class="control justify-content-center d-flex">
+                <button class="btn btn-success" onclick="accelerate('0')">GO!</button>
+                <button class="btn btn-danger " onclick="slower('0')">brake!</button>
+            </div>
+        </div>
+        <div class="player-2 row justify-content-around d-none " id="player2">
+            <div class="road road2 col-12" id="backloop2">
+                <div class="points" id="points-1">Score: </div>
+            </div>
+            <div class="control justify-content-center d-flex">
+                <button class="btn btn-success " onclick="accelerate('1')">GO!</button>
+                <button class="btn btn-danger " onclick="slower('1')">brake!</button>
+            </div>
+        </div>
+    </section>
+    <section id="selectPlayer" class="d-none col-6">
+            <div  class="select-player container">
+                <div class="justify-content-around row">
+                    <h3 class="title text-center col-9">Select Rockets</h3>
+                    <div class="col-6 d-flex justify-content-center lobby-select">
+                        <div id="select-0" class="d-flex justify-content-center"></div>
+                        <h4 class="title text-center col-12">Player 1</h4>
+                        <select name="coet" id="selectRunner0" class="w-100" onchange="runnerImg(0)">
+                            <option active value="">Select rocket</option>
+                        </select>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center lobby-select">
+                        <div id="select-1" class="d-flex justify-content-center"></div>
+                        <h4 class="title text-center col-12">Player 2</h4>
+                        <select name="coet" id="selectRunner1" class="w-100" onchange="runnerImg(1)">
+                            <option active value="">Select rocket</option>
+                        </select>
+                    </div>  
+                </div>
+                <div class="col-7 button-new" >
+                    <div class="text-danger text-center d-none" id="sameRunnerFeedback">You can't select the same runner twice.</div>
+                    <div class="text-danger text-center d-none" id="noRunnerFeedback">Select at least one runner.</div>
+                    <button id="show-rockets" class="btn inner-new btn-warning  col-12" onclick="letGo()">Start race!</button>
+                </div>
+            </div>
+    </section>
+  <!-- 1st Modal -->
+  <div class="modal fade" tabindex="-1" id="exampleModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header d-flex">
+          <h5 class="modal-title titol col-8">Rockets list</h5>
+          <button type="button" class="btn-close col-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="rocket-garage">
+        </div>
+        <div class="plantilla d-flex justify-content-around d-none" id="plantilla">
+            <img src="images/6-rocket.png" alt="" class="mini col-5">
+            <div class="shown-info col-5" id="shownInfo">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!--2nd Modal -->
+  <div class="modal fade" tabindex="-1" id="endingModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header d-flex">
+          <h5 class="modal-title titol col-8">Results</h5>
+          <button type="button" class="btn-close col-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="results" class="d-flex justify-content-center"></div>
+            <div id="results2" class="d-flex justify-content-center"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Play again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--3rd Modal -->
+  <div class="modal fade" tabindex="-1" id="howToModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header d-flex">
+          <h5 class="modal-title titol col-8">How to play</h5>
+          <button type="button" class="btn-close col-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <ul>
+                    <li>Name your rocket and click on Create your rocket</li>
+                    <li>Select the rocket you want to race with. The engines will determine its potency. More engines means more potency but less acceleration. 
+                        Less engines means less potency but more acceleration. Each rocket has its own pros and cons. hope you find out by yourself</li>
+                    <li>Once the rocket is created, click on <strong>"select runners"</strong> to select which rocket you want to play with</li>
+                    <li>The aim is to <strong>get the most points</strong> as you can before the time runs out. click on <strong>"GO!"</strong> to accelerate 
+                        and click on <strong>"BRAKE!"</strong> if you want to slow down.</li>
+                    <li>Each engine has its own potency. The acceleration of the rocket is based on the potency of each engine 
+                        and everytime you accelerate the potency of each engine will be incremented by 10 (till the maximum engine pontency is reached).</li>
+                    <li>In the other hand, we have the brakes which they work just on the other way around than the acceleration does. 
+                        Seems logic right? It is like cars, you must brake with a lower gear before you put in the lowest car's gear.
+                        (or you should if you are not doing it good luck with your car) </li>
+                    <li>Forgot to say it... but brakes and acceleration has a little cooldown which i'm not gonna tell you how long it is, 
+                        figure out by yourself.<strong>Your head is not just a brain pot</strong> </li>
+                    <li>Ah, and if your rocket keeps running when times is over, you <strong>won't win</strong> . Sorry not sorry</li>
+                    <li>if you are playing alone, I dare you to beat your best score. Good Luck Have Fun! Hope you enjoy it!</li>
+                </ul>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok... got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="controllers/controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+
+</body>
+</html>
