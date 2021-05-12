@@ -1,0 +1,84 @@
+.coet-nou,
+.choose,
+.select-player {
+  border: 3px solid #a8a6a6;
+  border-radius: 5px;
+  margin: 10vw auto;
+  padding: 50px 0; }
+
+.lobby-select {
+  flex-direction: column; }
+  .lobby-select .rocket-6, .lobby-select .rocket-3 {
+    height: 300px; }
+
+.select-player {
+  color: #f1f1f1; }
+
+.inner-new {
+  margin-top: 30px;
+  font-size: x-large;
+  font-weight: bolder;
+  border-radius: 5px;
+  height: 50px; }
+
+.button-new {
+  margin: 0 auto; }
+
+.road {
+  border: 2px solid #f1f1f1;
+  height: 200px;
+  overflow: hidden;
+  position: relative; }
+
+.road1 {
+  background-image: url(../images/background-Race1-inf.png); }
+
+.road2 {
+  background-image: url(../images/background-Race2-inf.png); }
+
+.control {
+  margin-bottom: 75px; }
+  .control button {
+    margin-right: 15px;
+    margin-top: 15px;
+    border-radius: 100%;
+    height: 75px;
+    width: 75px; }
+
+.runner-6-engines {
+  position: absolute;
+  top: -400px;
+  left: -118px;
+  transform: scale(0.2) rotate(90deg); }
+
+.runner-3-engines {
+  position: absolute;
+  transform: scale(0.2) rotate(90deg);
+  top: -200px;
+  left: -150px; }
+
+.points, .counting {
+  color: #f1f1f1;
+  font-weight: bolder;
+  display: flex; }
+
+.points {
+  font-size: 16px;
+  margin-left: 70%; }
+
+.counting {
+  font-size: 54px;
+  margin: 0 auto 10% 40%; }
+
+.titol {
+  font-size: 24px;
+  font-weight: bolder;
+  margin: 0 auto; }
+
+.plantilla {
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px; }
+  .plantilla .mini {
+    height: 70px; }
+
+/*# sourceMappingURL=styles.css.map */
